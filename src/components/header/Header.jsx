@@ -37,17 +37,54 @@ const Header = () => {
 		setShowSearch(false);
 	};
 
+	const navigationHandler = (type) => {
+		switch (type) {
+			case "movie":
+				navigate("/explore/movie");
+				break;
+			case "tv":
+				navigate("/explore/tv");
+				break;
+			case "home":
+				navigate("/");
+				break;
+
+			default:
+				break;
+		}
+		setMobileMenu(false);
+	};
+
 	return (
 		<header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
 			<ContentWrapper>
-				<div className="logo">
+				<div
+					className="logo"
+					onClick={() => {
+						navigationHandler("home");
+					}}
+				>
 					<img src={logo} alt="logo" />
 				</div>
 				<ul className="menuItems">
-					<li className="menuItem">Movies</li>
-					<li className="menuItem">TV Shows</li>
+					<li
+						className="menuItem"
+						onClick={() => {
+							navigationHandler("movie");
+						}}
+					>
+						Movies
+					</li>
+					<li
+						className="menuItem"
+						onClick={() => {
+							navigationHandler("tv");
+						}}
+					>
+						TV Shows
+					</li>
 					<li className="menuItem">
-						<HiOutlineSearch />
+						<HiOutlineSearch onClick={openSearch} />
 					</li>
 				</ul>
 				<div className="mobileMenuItems">
