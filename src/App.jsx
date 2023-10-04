@@ -10,12 +10,14 @@ import SearchResult from "./pages/searchResult/SearchResult";
 import PageNotFound from "./pages/404/PageNotFound";
 import { fetchDataFromApi } from "./utils/api";
 import { getApiConfiguration } from "./slices/home";
+import { getGenres } from "./slices/home";
 
 function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		fetchApiConfig();
+		genresCall();
 	}, []);
 
 	const fetchApiConfig = () => {
@@ -28,6 +30,24 @@ function App() {
 			dispatch(getApiConfiguration(url));
 		});
 	};
+
+	const genresCall = async () => {
+		let promises = [];
+		let endPoints = ["tv", "movie"];
+		let allGenres = {};
+
+		endPoints.forEach((endpoint) => {
+			promises.push(fetchDataFromApi(`/genre/${endpoint}/list`));
+		});
+
+		const data = await Promise.all(promises);
+		data.map(({ genres }) => {
+			return genres.map((item) => (allGenres[item.id] = item));
+		});
+
+		dispatch(getGenres(allGenres));
+	};
+
 	return (
 		<BrowserRouter>
 			<Header />
