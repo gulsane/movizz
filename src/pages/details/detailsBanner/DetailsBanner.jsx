@@ -19,6 +19,7 @@ const DetailsBanner = ({ video, crew }) => {
 	const { url } = useSelector((state) => state.home);
 
 	const { data, loading } = useFetch(`/${mediaType}/${id}`);
+	const _genres = data?.genres?.map((g) => g.id);
 
 	const toHoursAndMinutes = (totalMinutes) => {
 		const hours = Math.floor(totalMinutes / 60);
@@ -53,6 +54,10 @@ const DetailsBanner = ({ video, crew }) => {
 											)}`}
 										</div>
 										<div className="subtitle">{data.tagline}</div>
+										<Genres data={_genres} />
+										<div className="row">
+											<CircleRating rating={data.vote_average?.toFixed(1)} />
+										</div>
 									</div>
 								</div>
 							</ContentWrapper>
