@@ -17,7 +17,7 @@ const SearchResult = () => {
 		setLoading(true);
 		fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`)
 			.then((res) => {
-				setData(res?.results);
+				setData(res);
 				setPageNum((pre) => pre + 1);
 				setLoading(false);
 			})
@@ -40,8 +40,10 @@ const SearchResult = () => {
 	};
 
 	useEffect(() => {
+		setPageNum(1);
 		fetchInitialData();
 	}, [query]);
+
 	return (
 		<div className="searchResultsPage">
 			{loading && <Spinner initial={true} />}
