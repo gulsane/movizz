@@ -60,7 +60,7 @@ const SearchResult = () => {
 							</div>
 							<InfiniteScroll
 								className="content"
-								dataLength={data?.results.length || []}
+								dataLength={data?.results?.length || []}
 								next={fetchNextPageData}
 								hasMore={pageNum <= data?.total_pages}
 								loader={<Spinner />}
