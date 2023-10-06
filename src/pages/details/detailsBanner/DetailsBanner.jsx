@@ -20,6 +20,11 @@ const DetailsBanner = ({ video, crew }) => {
 
 	const { data, loading } = useFetch(`/${mediaType}/${id}`);
 	const _genres = data?.genres?.map((g) => g.id);
+	const directors = crew?.filter((c) => c.job === "Director") || [];
+	const writers =
+		crew?.filter(
+			(c) => c.job === "Screenplay" || c.job === "Story" || c.job === "Writer"
+		) || [];
 
 	const toHoursAndMinutes = (totalMinutes) => {
 		const hours = Math.floor(totalMinutes / 60);
@@ -40,7 +45,6 @@ const DetailsBanner = ({ video, crew }) => {
 							<ContentWrapper>
 								<div className="content">
 									<div className="left">
-										{console.log(url)}
 										{data.poster_path ? (
 											<Img className="posterImg" src={url.backdrop + data.poster_path} />
 										) : (
@@ -88,6 +92,32 @@ const DetailsBanner = ({ video, crew }) => {
 												</div>
 											)}
 										</div>
+										{directors.length > 0 && (
+											<div className="info">
+												<span className="text bold">Director: </span>
+												<span className="text">
+													{directors.map((d, i) => (
+														<span className="text" key={i}>
+															{d.name}
+															{directors.length - 1 !== i && ","}
+														</span>
+													))}
+												</span>
+											</div>
+										)}
+										{writers.length > 0 && (
+											<div className="info">
+												<span className="text bold">Writer: </span>
+												<span className="text">
+													{writers.map((w, i) => (
+														<span className="text" key={i}>
+															{w.name}
+															{writers.length - 1 !== i && ","}
+														</span>
+													))}
+												</span>
+											</div>
+										)}
 									</div>
 								</div>
 							</ContentWrapper>
