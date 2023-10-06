@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import "./style.scss";
 
 import { fetchDataFromApi } from "../../utils/api";
+import Spinner from "../../components/spinner/Spinner";
 
 const SearchResult = () => {
 	const [data, setData] = useState(null);
@@ -40,7 +41,11 @@ const SearchResult = () => {
 	useEffect(() => {
 		fetchInitialData();
 	}, [query]);
-	return <div className="SearchResultsPage">SearchResult</div>;
+	return (
+		<div className="SearchResultsPage">
+			{loading && <Spinner initial={true} />}
+		</div>
+	);
 };
 
 export default SearchResult;
