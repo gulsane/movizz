@@ -15,7 +15,22 @@ const SearchResult = () => {
 		setLoading(true);
 		fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`)
 			.then((res) => {
-				setData(res);
+				setData(res?.results);
+				setPageNum((pre) => pre + 1);
+				setLoading(false);
+			})
+			.catch((err) => {});
+	};
+
+	const fetchNextPageData = () => {
+		setLoading(true);
+		fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`)
+			.then((res) => {
+				if (data?.results) {
+					setData({ ...data, results: [...data?.results, ...res?.results] });
+				} else {
+					setData(res);
+				}
 				setPageNum((pre) => pre + 1);
 				setLoading(false);
 			})
