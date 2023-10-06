@@ -5,6 +5,7 @@ import "./style.scss";
 
 import { fetchDataFromApi } from "../../utils/api";
 import Spinner from "../../components/spinner/Spinner";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 
 const SearchResult = () => {
 	const [data, setData] = useState(null);
@@ -42,8 +43,23 @@ const SearchResult = () => {
 		fetchInitialData();
 	}, [query]);
 	return (
-		<div className="SearchResultsPage">
+		<div className="searchResultsPage">
 			{loading && <Spinner initial={true} />}
+			{!loading && (
+				<ContentWrapper>
+					{data?.results?.length > 0 ? (
+						<>
+							<div className="pageTitle">
+								{`Search ${
+									data?.total_results > 1 ? "results" : "result"
+								} for '${query}'`}
+							</div>
+						</>
+					) : (
+						<span className="resultNotFound">Sorry, Results not found</span>
+					)}
+				</ContentWrapper>
+			)}
 		</div>
 	);
 };
