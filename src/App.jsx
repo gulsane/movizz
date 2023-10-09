@@ -11,6 +11,7 @@ import PageNotFound from "./pages/404/PageNotFound";
 import { fetchDataFromApi } from "./utils/api";
 import { getApiConfiguration } from "./slices/home";
 import { getGenres } from "./slices/home";
+import Person from "./pages/person/Person";
 
 function App() {
 	const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function App() {
 				<Route path="/:mediaType/:id" element={<Details />} />
 				<Route path="/search/:query" element={<SearchResult />} />
 				<Route path="/explore/:mediaType" element={<Explore />} />
+				<Route path="/person/:person_id" element={<Person />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 			<Footer />
