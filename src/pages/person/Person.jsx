@@ -7,6 +7,8 @@ import "./style.scss";
 import useFetch from "../../hooks/useFetch";
 
 import Img from "../../components/lazyLoadImage/Img";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
+import PosterFallback from "../../assets/no-poster.png";
 
 const Person = () => {
 	const { person_id } = useParams();
@@ -23,6 +25,22 @@ const Person = () => {
 				</div>
 			)}
 			<div className="opacity-layer"></div>
+
+			<ContentWrapper>
+				<div className="content">
+					<div className="left">
+						{data?.profile_path ? (
+							<Img
+								className="posterImg"
+								src={`${url.profile}/${data?.profile_path}`}
+							/>
+						) : (
+							<Img className="posterImg" src={PosterFallback} />
+						)}
+					</div>
+					<div className="right"></div>
+				</div>
+			</ContentWrapper>
 		</div>
 	);
 };
